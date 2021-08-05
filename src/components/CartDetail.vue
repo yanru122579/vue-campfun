@@ -100,7 +100,7 @@
     <div class="container">
       <div class="cartPiceBtn">
         <button>回到商品頁面</button>
-        <a href="/cartorder">到訂單頁面</a>
+        <a href="/cartorder" @click="sessionClear()">到訂單頁面</a>
       </div>
     </div>
   </div>
@@ -118,8 +118,23 @@ export default {
     console.log("test", this.orderData);
   },
   methods: {
+    //使用時間格式
     moment() {
       return moment();
+    },
+    //結帳後清除session
+    async sessionClear() {
+      const url = `http://localhost:4000/cart/clear`;
+      const request = new Request(url, {
+        method: "GET",
+        credentials: "include",
+        headers: new Headers({
+          Accept: "application/json"
+        })
+      });
+      const response = await fetch(request);
+      const data = await response.json();
+      return data;
     }
   }
 };
