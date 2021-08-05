@@ -94,7 +94,7 @@
     <div class="container">
       <div class="cartPiceBtn">
         <button>回到商品頁面</button>
-        <button>到訂單</button>
+        <a href="/cartorder">到訂單頁面</a>
       </div>
     </div>
   </div>
@@ -106,6 +106,7 @@ export default {
   props: {
     orderData: Object
   },
+
   mounted() {
     console.log("test", this.orderData);
   }

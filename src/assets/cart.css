@@ -342,7 +342,8 @@ p {
   padding: 50px 0 100px 0;
 }
 
-.cartPiceBtn button {
+.cartPiceBtn button,
+.cartPiceBtn a {
   width: 150px;
   height: 50px;
   border-radius: 12px;
@@ -350,6 +351,12 @@ p {
   border: none;
   color: #fff;
   font-size: 20px;
+}
+.cartPiceBtn a {
+  text-align: center;
+  justify-content: center;
+  line-height: 47px;
+  text-decoration: none;
 }
 
 .cartCards {

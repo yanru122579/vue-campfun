@@ -155,7 +155,7 @@ export default {
     },
     //切換下一頁狀態
     nextGoChange(item) {
-      this.nextGo = item;
+      if (this.product.length >= 1) this.nextGo = item;
     }
   },
   updated() {
