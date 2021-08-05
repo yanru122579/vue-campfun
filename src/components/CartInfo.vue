@@ -1,6 +1,6 @@
 <template>
   <span>
-    <div class="container">
+    <div class="container" v-if="orderData.orderItem.length == 0">
       <div class="cartPiceDetil">
         <div class="cartPiceDetilItem1">
           <p>品項:</p>
@@ -149,7 +149,7 @@ export default {
         cartPayId: 1,
         cartLogisticsId: 1,
         mid: 127,
-        cartTotal: 123,
+        cartTotal: this.sumTotal,
         cartDescription: 1,
         cartStatus: "待出貨",
         cartOrderId: orderid,

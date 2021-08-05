@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="CartDetailText">
+    <!-- <div class="CartDetailText">
       <h4>已完成訂單</h4>
       <h4>感謝您的購買</h4>
-    </div>
-    <div class="cartMain container">
+    </div> -->
+    <!-- <div class="cartMain container">
       <div class=" cartItemDay d-flex">
         <p class="cart-date-h1">
           <strong>
@@ -43,8 +43,8 @@
           </tbody>
         </table>
       </div>
-    </div>
-    <div class="cartPiceDetil">
+    </div> -->
+    <div class="cartPiceDetil container">
       <div class="cartPiceDetilItem1">
         <p>總共消費金額：</p>
       </div>
