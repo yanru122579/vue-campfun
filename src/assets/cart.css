@@ -398,6 +398,7 @@ p {
 }
 
 .cartInfoMenber div {
+  text-align: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -412,6 +413,11 @@ p {
   border-radius: 8px;
   padding: 5px;
   margin-bottom: 16px;
+  /* text-align: center; */
+}
+.cartInfoMenber p {
+  margin: 10px;
+  /* background-color: #fff; */
 }
 
 .cartInfoMenber select {

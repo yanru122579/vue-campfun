@@ -16,25 +16,45 @@
         <form class="cartInfoMenber" @submit.prevent="addCartToSever">
           <br />
           <label>收件人姓名:</label>
-          <input type="text" v-model="nNN" />
+          <input type="text" v-model="nNN" placeholder="請輸入姓名" required />
           <label>收件人手機:</label>
-          <input type="text" v-model="nCC" />
+          <input
+            type="text"
+            v-model="nCC"
+            placeholder="請輸入手機"
+            pattern="09\d{2}-?\d{3}-?\d{3}"
+            maxlength="10"
+            required
+          />
           <label>收件人信箱:</label>
-          <input type="text" v-model="nEE" />
+          <input type="email" v-model="nEE" placeholder="請輸入信箱" required />
           <label>收件人地址:</label>
           <div>
-            <select name="" id="">
+            <select name="" id="" v-model="city">
               <option value="-1">選擇縣市</option>
+              <option
+                v-for="(item, index) in countries"
+                :key="index"
+                :value="index"
+                >{{ item }}</option
+              >
             </select>
-            <select name="" id="">
+            <select name="" id="" v-model="area">
               <option value="-1">選擇區域</option>
+              <option
+                v-for="(item, i) in townshipsData[city]"
+                :key="i"
+                :value="i"
+                >{{ item }}</option
+              >
             </select>
-            <select name="" id="">
-              <option value="-1">郵遞區號</option>
-            </select>
+            <p v-if="city > -1 && area > -1">
+              郵遞區號：{{ postcodes[city][area] }}
+            </p>
+            <p v-else>郵遞區號</p>
           </div>
           <br />
-          <input type="text" placeholder="請輸入地址" v-model="nAA" />
+          <input type="text" placeholder="請輸入地址" v-model="nAA" required />
           <br />
           <label for="">發票資訊</label>
           <br />
@@ -67,7 +87,7 @@
 <script>
 import CartDetail from "../components/CartDetail.vue";
 //地址的資料
-// import townships from "../json/townships";
+import { countries, townships, postcodes } from "../json/townships";
 export default {
   name: "CartInfo",
   props: {
@@ -91,8 +111,12 @@ export default {
       nAA: "",
       nEE: "",
       nCC: "",
-      orderData: { orderItem: [], orderInfo: "" }
-      // townshipsData: []
+      orderData: { orderItem: [], orderInfo: "" },
+      townshipsData: "",
+      countries: "",
+      postcodes: "",
+      city: "-1",
+      area: "-1"
     };
   },
   methods: {
@@ -117,8 +141,8 @@ export default {
       //收件人資料 使用物件寫入資料庫
       data.orderInfo = {
         nNN: this.nNN,
-        countries: 1,
-        townships: 1,
+        countries: this.city,
+        townships: this.area,
         nAA: this.nAA,
         nCC: this.nCC,
         nEE: this.nEE,
@@ -127,7 +151,7 @@ export default {
         mid: 127,
         cartTotal: 123,
         cartDescription: 1,
-        cartStatus: 1,
+        cartStatus: "待出貨",
         cartOrderId: orderid,
         orderclass: 1,
         created_at: new Date(),
@@ -160,12 +184,16 @@ export default {
     }
   },
   created() {
-    // this.townshipsData = townships.data;
-    // console.log(townships.data);
+    this.townshipsData = townships;
+    this.countries = countries;
+    this.postcodes = postcodes;
+    console.log(this.townshipsData);
+    console.log(this.countries);
+    console.log(this.postcodes);
   },
 
   mounted() {
-    // console.log(this.townshipsData);
+    // console.log(this.city);
   }
 };
 </script>

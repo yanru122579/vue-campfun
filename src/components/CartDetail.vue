@@ -66,10 +66,16 @@
       <div class="CartDetail item2">
         <ul>
           <li>{{ orderData.orderInfo.cartOrderId }}</li>
-          <li>{{ orderData.orderInfo.created_at }}</li>
+          <li>
+            {{ moment(orderData.orderInfo.created_at).format("YYYY-MM-DD") }}
+          </li>
           <li>{{ orderData.orderInfo.cartStatus }}</li>
-          <li>{{ orderData.orderInfo.cartLogisticsId }}</li>
-          <li>{{ orderData.orderInfo.cartPayId }}</li>
+          <li>
+            {{ orderData.orderInfo.cartLogisticsId == 1 ? "自取" : "宅配" }}
+          </li>
+          <li>
+            {{ orderData.orderInfo.cartPayId == 1 ? "信用卡結帳" : "貨到付款" }}
+          </li>
         </ul>
       </div>
       <div class="CartDetail item3">
@@ -87,7 +93,7 @@
           <li>{{ orderData.orderInfo.nCC }}</li>
           <li>{{ orderData.orderInfo.nEE }}</li>
           <li>{{ orderData.orderInfo.nAA }}</li>
-          <li>{{ orderData.orderInfo.cartPayId }}</li>
+          <li>{{ orderData.orderInfo.cartPayId == 1 ? "已結清" : "" }}</li>
         </ul>
       </div>
     </div>
@@ -101,14 +107,20 @@
 </template>
 
 <script>
+import moment from "moment";
+// let moment = require("moment");
 export default {
   name: "CartDetail",
   props: {
     orderData: Object
   },
-
   mounted() {
     console.log("test", this.orderData);
+  },
+  methods: {
+    moment() {
+      return moment();
+    }
   }
 };
 </script>
