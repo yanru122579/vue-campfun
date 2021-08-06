@@ -40,18 +40,35 @@
       />
       <nav aria-label="Page navigation example">
         <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-          <li class="page-item" v-for="page in data.totalPages" :key="page">
-            <button type="button" class="page-link" @click="changePages(page)">
+          <li class="page-item">
+            <button type="button" class="page-link" @click="pageChange++">
+              Previous
+            </button>
+          </li>
+          <!-- <li class="page-item" v-for="page in data.totalPages" :key="page"> -->
+          <li
+            :class="pageChange == page ? 'active' : ''"
+            v-for="page in newPage"
+            :key="page"
+          >
+            <button type="button" class="page-link " @click="onClickPage(page)">
               {{ page }}
             </button>
           </li>
-
           <li class="page-item"><a class="page-link" href="#">Next</a></li>
         </ul>
       </nav>
     </div>
   </div>
+  <!-- <div class="mt-3">
+    <h6>Goto last button number</h6>
+    <b-pagination
+      v-model="pageChange"
+      :total-rows="data.totalPages"
+      :per-page="pageRange"
+      last-number
+    ></b-pagination>
+  </div> -->
   <router-link to="/">Go Back</router-link>
 </template>
 <script>
@@ -63,7 +80,9 @@ export default {
       data: "",
       dataItem: "",
       dataOrderId: "1627459278465",
-      pageChange: 1
+      pageChange: 1,
+      pageRange: 3,
+      newPage: []
     };
   },
   components: {
@@ -94,6 +113,41 @@ export default {
       for (let number = 1; number <= this.data.totalPages; number++) {
         this.totalPage.push();
       }
+    },
+    //點擊頁數
+    async onClickPage(item) {
+      this.pageChange = await item;
+      console.log(this.pageChange);
+      this.data = await this.cartOrder();
+      console.log("更新後", this.data);
+      this.pageChange = this.creatNewPage(this.data.page);
+    },
+    //修改分頁長度
+    range(start, end) {
+      return Array(end - start + 1)
+        .fill()
+        .map((_, idx) => start + idx);
+    },
+    createPages(pageChange) {
+      var start =
+        pageChange - this.pageRange <= 0 ? 0 : pageChange - this.pageRange;
+      var end = pageChange + this.pageRange;
+      return this.range(start, end);
+    },
+    async creatNewPage(item) {
+      let pages = [];
+      for (let i = item - 2; i <= item + 2; i++) {
+        pages.push(i);
+      }
+      console.log("1123", pages);
+      if (pages[0] < 1) {
+        pages = [1, 2, 3, 4, 5];
+      }
+      if (pages[6] > this.data.totalPages) {
+        pages = [1, 2, 3, 4, 5];
+      }
+      this.newPage = await pages;
+      return pages;
     }
   },
   async mounted() {
@@ -102,9 +156,15 @@ export default {
     //將單項商品細節設定到dataItem
     this.dataItem = await this.itemSever();
     console.log(this.data.totalPages);
+    // this.createPages(this.pageChange);
+    // console.log(this.pageChange);
+    this.newPage = await this.creatNewPage(this.data.page);
+    // this.creatNewPage(this.data.page);
   },
-  updated() {
-    // this.data = this.cartOrder();
+  async updated() {
+    // this.pageChange = await this.creatNewPage();
+    // this.newPage = await this.creatNewPage(this.data.page);
+    // this.newPage = await this.creatNewPage();
   }
 };
 </script>
