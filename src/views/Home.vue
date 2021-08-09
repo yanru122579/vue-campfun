@@ -38,7 +38,7 @@ export default {
   methods: {
     //取得加到購物車的資料
     async addProduct() {
-      const url = "http://localhost:4000/cart";
+      const url = "api/cart";
       const request = new Request(url, {
         method: "GET",
         credentials: "include",
@@ -53,7 +53,7 @@ export default {
     },
     //刪除單筆商品
     async delectProduct(sid) {
-      const url = `http://localhost:4000/cart/remove/${sid}`;
+      const url = `/api/cart/remove/${sid}`;
       const request = new Request(url, {
         method: "GET",
         credentials: "include",
@@ -68,7 +68,7 @@ export default {
     },
     //加到購物車
     async addCart(sid) {
-      const url = `http://localhost:4000/cart/add?sid=${sid}&quantity=1`;
+      const url = `/api/cart/add?sid=${sid}&quantity=1`;
       const request = new Request(url, {
         method: "GET",
         credentials: "include",
@@ -87,7 +87,7 @@ export default {
       if (quantity == 0) {
         return;
       }
-      const url = `http://localhost:4000/cart/update?sid=${sid}&quantity=${quantity}`;
+      const url = `/api/cart/update?sid=${sid}&quantity=${quantity}`;
       const request = new Request(url, {
         method: "GET",
         credentials: "include",

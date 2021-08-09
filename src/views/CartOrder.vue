@@ -92,7 +92,7 @@ export default {
     //取得訂單資料
     async cartOrder() {
       const res = await fetch(
-        `http://localhost:4000/cartorder/api/?page=${this.pageChange}&orderClass=1`
+        `/api/cartorder/api/?page=${this.pageChange}&orderClass=1`
       );
       const data = await res.json();
       console.log("123", data);
@@ -100,9 +100,7 @@ export default {
     },
     //取得單項商品細節
     async itemSever() {
-      const res = await fetch(
-        `http://localhost:4000/cartorder/item/${this.dataOrderId}`
-      );
+      const res = await fetch(`/api/cartorder/item/${this.dataOrderId}`);
       const data = await res.json();
       console.log("445", data);
       console.log(this.dataOrderId);
@@ -143,7 +141,7 @@ export default {
       if (pages[0] < 1) {
         pages = [1, 2, 3, 4, 5];
       }
-      if (pages[6] > this.data.totalPages) {
+      if (pages[4] > this.data.totalPages) {
         pages = [1, 2, 3, 4, 5];
       }
       this.newPage = await pages;
